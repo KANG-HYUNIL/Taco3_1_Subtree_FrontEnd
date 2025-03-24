@@ -1,6 +1,6 @@
 //fetch 요청을 간략하게 사용하기 위한 Builder Patter 클래스 
 class FetchRequestBuilder {
-    //test
+    //test test
     constructor() {
         this.url = "";
         this.method = "GET";
