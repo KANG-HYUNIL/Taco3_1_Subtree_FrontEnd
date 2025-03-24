@@ -1,0 +1,38 @@
+{
+    "cli": {
+    "version": ">=3.0.0"
+    },
+    "build": {
+    "development": {
+        "developmentClient": true,
+        "distribution": "internal", // 내부 배포용인 internal로 설정
+        "ios": {
+        "simulator": false
+        },
+        "android": {
+        "buildType": "apk"
+        }
+    },
+    "production": {
+        "developmentClient": false,
+        "distribution": "store",
+        "ios": {
+        "simulator": false
+        },
+        "android": {
+        "buildType": "apk"
+        }
+    }
+    },
+    "submit": {
+    "production": { //실제 배포 시 필요한 값들 애플 개발자? 계정 / 구글 서비스 계정
+        "ios": {
+        "appleId": "your-apple-id@example.com"
+        },
+        "android": {
+        "serviceAccountKeyPath": "./google-service-account.json"
+        }
+    }
+    }
+}
+    

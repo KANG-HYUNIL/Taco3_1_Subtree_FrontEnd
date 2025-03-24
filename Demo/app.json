@@ -13,7 +13,11 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSPhotoLibraryUsageDescription": "Allow to access your photos.",
+        "NSPhotoLibraryAddUsageDescription": "Allow to save photos."
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -24,5 +28,6 @@
     "web": {
       "favicon": "./assets/favicon.png"
     }
+
   }
 }
