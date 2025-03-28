@@ -4,12 +4,12 @@ import { Alert, Platform } from 'react-native';
 import FetchRequestBuilder from '../utils/fetchRequest';
 import { API } from '../constants/api_constants';
 import { ensurePermissionOrMoveToSetting } from '../utils/permissionHandler';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const AlertTitle = '알림 권한 필요';
 const AlertMessage = '알림 권한이 필요합니다. 설정 화면으로 이동하여 권한을 허용해주세요.';
 
-
+const TOKEN_STORAGE_KEY = '@expo_token';
 
 /**
  * Notification 권한 확인 메서드
@@ -81,8 +81,17 @@ export const ensureNotificationPermission = async () => {
 export const sendTokenToServe = async() => {
 
     try {
+
+        cur_token = await AsyncStorage.getItem(TOKEN_STORAGE_KEY); // AsyncStorage에서 토큰 가져오기
+
         // 알림 토큰 가져오기
-        token = (await Notifications.getExpoPushTokenAsync()).data; 
+        const token = (await Notifications.getExpoPushTokenAsync()).data; 
+
+        if (token == cur_token) // 현재 토큰과 같으면 전송하지 않음
+        {
+            return;
+        }
+
 
         const fetchRequest = new FetchRequestBuilder(); //FetchRequestBuilder 인스턴스 생성
 
@@ -106,6 +115,8 @@ export const sendTokenToServe = async() => {
                 lightColor: '#FF231F7C',
                 });
             }
+
+            await AsyncStorage.setItem(TOKEN_STORAGE_KEY, token); // AsyncStorage에 토큰 저장
 
         }
         else 
