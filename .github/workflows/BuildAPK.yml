@@ -9,27 +9,30 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-      - name: Set working directory
-        run: cd Demo
+      # - name: Set working directory to Demo
+      #   working-directory: Demo
+      #   run: echo "Working in ./Demo"
 
       - name: Install Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 18
+          cache: 'npm'
+          cache-dependency-path: Demo/package-lock.json
 
+          
       - name: Install dependencies
-        run: |
-          cd Demo
-          npm install
+        working-directory: Demo
+        run: npm install --legacy-peer-deps
 
-      - name: Install EAS CLI
-        run: npm install -g eas-cli
+      - name: Install EAS CLI globally
+        run: npm install -g eas-cli --legacy-peer-deps
 
       - name: Run EAS Build (Android)
-        run: |
-          cd Demo
-          eas build --platform android --profile development --non-interactive
+        working-directory: Demo
+        run: eas build --platform android --profile development --non-interactive
         env:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
