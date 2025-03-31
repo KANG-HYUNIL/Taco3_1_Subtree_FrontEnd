@@ -22,12 +22,16 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
+          cache-dependency-path: Demo/package-lock.json
 
       - name: Install dependencies
-        run: cd Demo && npm install --legacy-peer-deps
+        working-directory: Demo
+        run: npm install --legacy-peer-deps
 
       - name: Build the project (if applicable)
-        run: cd Demo && npm run build --if-present
+        working-directory: Demo
+        run: npm run build --if-present
 
       - name: Run tests
-        run: cd Demo && npm test
+        working-directory: Demo
+        run: npm test
