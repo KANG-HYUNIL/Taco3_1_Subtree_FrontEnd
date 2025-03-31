@@ -11,18 +11,25 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Set working directory
+        run: cd Demo
+
       - name: Install Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 18
 
       - name: Install dependencies
-        run: npm install
+        run: |
+          cd Demo
+          npm install
 
       - name: Install EAS CLI
         run: npm install -g eas-cli
 
       - name: Run EAS Build (Android)
-        run: eas build --platform android --profile development --non-interactive
+        run: |
+          cd Demo
+          eas build --platform android --profile development --non-interactive
         env:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
